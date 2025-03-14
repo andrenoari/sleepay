@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const statusElement = document.getElementById('status');
   const sleepDurationElement = document.getElementById('sleepDuration');
 
-  // Load saved times
   chrome.storage.sync.get(['sleepTime', 'wakeTime'], (result) => {
     if (result.sleepTime) {
       sleepTimeInput.value = result.sleepTime;
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sleep = new Date(`2000/01/01 ${sleepTime}`);
     let wake = new Date(`2000/01/01 ${wakeTime}`);
     
-    // If wake time is earlier than sleep time, add one day to wake time
     if (wake < sleep) {
       wake = new Date(`2000/01/02 ${wakeTime}`);
     }

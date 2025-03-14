@@ -8,7 +8,6 @@ function initializeOverlay() {
   if (isInitialized) return;
   
   try {
-    // Set up message listener first to ensure we don't miss any messages
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (request.action === 'showOverlay') {
         try {
@@ -32,10 +31,9 @@ function initializeOverlay() {
           sendResponse({success: false, error: error.message});
         }
       }
-      return true; // Keep the message channel open for async response
+      return true;
     });
 
-    // Create a promise to track initialization
     const initPromise = new Promise((resolve, reject) => {
       const attemptInitialization = () => {
         if (initializationAttempts >= MAX_ATTEMPTS) {
@@ -97,16 +95,10 @@ function createOverlay() {
   image.onerror = () => {
     console.error('Failed to load sleep time image');
     image.style.display = 'none';
-    // Show text message as fallback
-    const message = document.createElement('div');
-    message.className = 'sleep-time-message';
-    message.textContent = "It's past your bedtime! Time to rest.";
-    overlay.appendChild(message);
   };
   
   overlay.appendChild(image);
   document.body.appendChild(overlay);
 }
 
-// Initialize when the content script loads
 initializeOverlay();

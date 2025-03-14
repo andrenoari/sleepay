@@ -1,8 +1,6 @@
-// Wait for content scripts to load before first check
 chrome.runtime.onInstalled.addListener(() => {
   setTimeout(() => {
     checkTime();
-    // Check every minute after initial delay
     setInterval(checkTime, 60000);
   }, 2000);
 });
@@ -10,7 +8,6 @@ chrome.runtime.onInstalled.addListener(() => {
 let isInSleepWindow = false;
 let readyTabs = new Set();
 
-// Listen for content script ready messages
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'contentScriptReady' && sender.tab) {
     console.log(`Content script ready in tab ${sender.tab.id}`);
@@ -22,10 +19,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         .catch(error => console.log(`Failed to show overlay on ready tab ${sender.tab.id}:`, error));
     }
   }
-  return true; // Keep the message channel open for async response
+  return true;
 });
 
-// Clean up removed tabs
 chrome.tabs.onRemoved.addListener((tabId) => {
   readyTabs.delete(tabId);
 });
@@ -46,10 +42,8 @@ function checkTime() {
     const wasInSleepWindow = isInSleepWindow;
     
     if (sleepTimeMinutes <= wakeTimeMinutes) {
-      // Normal case: sleep time is before wake time
       isInSleepWindow = currentTime >= sleepTimeMinutes && currentTime < wakeTimeMinutes;
     } else {
-      // Edge case: sleep time is after wake time (crosses midnight)
       isInSleepWindow = currentTime >= sleepTimeMinutes || currentTime < wakeTimeMinutes;
     }
 
@@ -70,7 +64,7 @@ function showOverlayOnAllTabs() {
           console.log(`Successfully sent message to tab ${tab.id}`);
         } catch (error) {
           console.log(`Failed to show overlay on tab ${tab.id}:`, error);
-          readyTabs.delete(tab.id); // Remove tab if message fails
+          readyTabs.delete(tab.id);
         }
       }
     }
@@ -93,10 +87,7 @@ function hideOverlayOnAllTabs() {
   });
 }
 
-// Listen for new tabs being created
 chrome.tabs.onCreated.addListener((tab) => {
   if (isInSleepWindow) {
-    // The content script will send a ready message when initialized
-    // We'll show the overlay in the onMessage listener above
   }
 });

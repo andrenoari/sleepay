@@ -1,14 +1,6 @@
 # Sleepay - Sleep Time Reminder
 
-Sleepay is a Chrome extension that helps you maintain a healthy sleep schedule by providing timely reminders when it's time to go to bed. It calculates your optimal sleep duration based on your preferred sleep and wake times, ensuring you get enough rest.
-
-## Features
-
-- Set custom sleep and wake times
-- Automatic sleep duration calculation
-- Gentle reminder notifications
-- Persistent settings across browser sessions
-- Simple and intuitive interface
+Sleepay - A reminder you really need.
 
 ## Installation
 
@@ -40,10 +32,9 @@ The extension stores your sleep schedule preferences using Chrome's storage API.
 - `content.js`: Handles the display of sleep reminders
 - `styles.css`: Styling for the popup and notifications
 
-## Contributing
+## Permissions
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+The extension requires the following permissions:
+- Storage: To save your sleep schedule preferences
+- Tabs: To display sleep reminders
+- Active Tab: To interact with the current browser tab

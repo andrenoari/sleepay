@@ -2,6 +2,8 @@
 
 Sleepay - A reminder you really need.
 
+![Sleep Reminder](sleep.jpg)
+
 ## Installation
 
 1. Download or clone this repository to your local machine
